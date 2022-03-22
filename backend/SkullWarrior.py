@@ -14,6 +14,10 @@ y = altura/2
 x_azul = randint(40,600)
 y_azul = randint(50,430)
 
+pontos = 0
+
+fonte = pygame.font.SysFont('gabriola',40,True, True,)
+
 tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption('SkullWarrior')
 relogio = pygame.time.Clock()
@@ -22,6 +26,9 @@ relogio = pygame.time.Clock()
 while True:
     relogio.tick(30)
     tela.fill((0,0,0))
+
+    mensagem = f'Pontos: {pontos}'
+    texto_formatado = fonte.render(mensagem,True,(255,255,255))
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
@@ -50,6 +57,7 @@ while True:
     if ret_vermelho.colliderect(ret_azul):
         x_azul = randint(40,600)
         y_azul = randint(50,430)
+        pontos = pontos + 1
 
     # if y >= altura:
     #     y = 0
@@ -57,5 +65,7 @@ while True:
     #x = x + 1
     #pygame.draw.circle(tela, (0, 0, 255), (300,260), 40)
     #pygame.draw.line(tela, (255,255,0), (390,0), (390,600), 5 )
+    tela.blit(texto_formatado,(400,40))
+
 
     pygame.display.update()
