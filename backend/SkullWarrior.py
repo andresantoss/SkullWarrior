@@ -5,18 +5,24 @@ from random import randint
 
 pygame.init()
 
+pygame.mixer.music.set_volume(0.05)
+musica_fundo = pygame.mixer.music.load('BoxCat Games - Storm.mp3')
+pygame.mixer.music.play(-1)
+
+barulho_colisao = pygame.mixer.Sound('Super_Mario_Bros_Coin_Sound_Effect.mp3')
+
 largura = 640
 altura = 480
 
-x = largura/2
-y = altura/2
+x = int(largura/2)
+y = int(altura/2)
 
 x_azul = randint(40,600)
 y_azul = randint(50,430)
 
 pontos = 0
 
-fonte = pygame.font.SysFont('gabriola',40,True, True,)
+fonte = pygame.font.SysFont('arial',40,True, True,)
 
 tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption('SkullWarrior')
@@ -58,6 +64,7 @@ while True:
         x_azul = randint(40,600)
         y_azul = randint(50,430)
         pontos = pontos + 1
+        barulho_colisao.play()
 
     # if y >= altura:
     #     y = 0
