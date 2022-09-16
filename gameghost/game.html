@@ -3,28 +3,91 @@
 <script>
     const canvas=document.getElementById("canvas");
     const ctx=canvas.getContext("2d");
-    let ret=new Retangulo(0,0,150,50,"red");
-    let retGreen = new Retangulo(50,50,50,20,"green");
+    let ret1=new Retangulo(0,0,150,49,"green");
+    let ret2 = new Retangulo(50,50,50,50,"red");
+    let ret3 = new Retangulo(0,0,50,50,"blue");
 
     const components=[]
-    components.push(ret);
-    components.push(retGreen);
-
+    components.push(ret1);
+    components.push(ret2);
+    components.push(ret3);
+    indoD = 10;
     function update(){
         //ret.y+=10;
         //retGreen.y+=5;
-        if (ret.y == 600)
+        if (ret1.y == 600)
         {
-            ret.y=-150;
+            ret1.y=-150;
         }
-        if (retGreen.y == 600)
+        else if(ret1.y == -150){
+            ret1.y = 600
+        }
+        if (ret1.x == 600)
         {
-            retGreen.y=-150;
+            ret1.x = -50;
         }
+        else if(ret1.x == -50)
+        {
+            ret1.x = 600;
+        }
+        if (ret2.y == 600)
+        {
+            ret2.y=-150;
+        }
+        colision(ret1,ret2);
+        //console.log(ret3.x);
+        if (indoD == 10){
+            ret3.x = ret3.x + indoD;
+        }
+        if (indoD == -10){
+            ret3.x = ret3.x + indoD;
+        }   
+        if (ret3.x == 550){
+            indoD = -10;
+        }
+        if (ret3.x == 0)
+        {
+            indoD = 10;
+        }
+        
         for(const obj of components){
             obj.update();
         }
     }
+
+    function colision(re1,re2){
+        const ret1Xmax=re1.x+re1.largura;
+        const ret1Xmin=re1.x;
+        const ret1Ymin=re1.y;
+        const ret1Ymax=re1.y+re1.altura;
+        
+        const ret2Xmax=re2.x+re2.largura;
+        const ret2Xmin=re2.x;
+        const ret2Ymin=re2.y;
+        const ret2Ymax=re2.y+re2.altura;
+
+        
+        if(ret1Ymin>ret2Ymax){
+            return false;
+        }
+        if(ret1Ymax<ret2Ymin){
+            return false;
+        }
+        if(ret1Xmin>ret2Xmax){
+            return false;
+        }
+        if(ret1Xmax<ret2Xmin){
+            return false;
+        }
+        else{
+            val1 = Math.random() * (550 - 10) + 10;
+            val2 = Math.random() * (550 - 10) + 10;
+            ret2.x = val1;
+            ret2.y = val2;
+            return;
+        }
+    }
+
     function draw(){
         ctx.clearRect(0,0,600,600)
         for(const obj of components){
@@ -43,19 +106,19 @@
     });
 
     function inputs(){
-        ret.vx=0;
-        ret.vy=0;
+        ret1.vx=0;
+        ret1.vy=0;
         if(teclas[37]){ //seta esquerda
-            ret.vx=-1
+            ret1.vx=-10
         }
         if(teclas[38]){ //seta baixo
-            ret.vy=-1
+            ret1.vy=-10
         }
         if(teclas[39]){ //seta direita
-            ret.vx=1
+            ret1.vx=10
         }
         if(teclas[40]){ //seta cima
-            ret.vy=1
+            ret1.vy=10
         }
     }
 
@@ -63,7 +126,36 @@
         inputs();
         update();
         draw();
-
     }
     setInterval(gameloop,33);
+
+/* 4
+O Explique o que seguinte código esta fazendo, supunha que
+exista um canvas declarado no HTML com id 'canvas'.
+function desenhar(){
+var canvas=document.getElementById('canvas');
+var ctx=canvas.getContext('2d');
+ctx.fillStyle='blue';
+ctx.beginPath();
+ctx.moveTo(0,0);
+ctx.lineTo(100,100);
+ctx.lineTo(100,0);
+ctx.lineTo(0,0);
+ctx.fill();
+ctx.fillStyle='blue';
+ctx.beginPath();
+ctx.moveTo(200,200);
+ctx.lineTo(300,300);
+
+2
+
+ctx.lineTo(300,200);
+ctx.lineTo(200,200);
+ctx.stroke();
+} 
+
+
+
+
+*/
 </script>
